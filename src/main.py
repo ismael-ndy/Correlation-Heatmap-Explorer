@@ -2,44 +2,33 @@ import streamlit as st
 from yahooquery import Ticker
 import yfinance as yf
 import seaborn as sns
+import matplotlib.pyplot as plt
 import numpy as np
 
-etfs = [
-    "SPY",  # SPDR S&P 500
-    "QQQ",  # Invesco QQQ (Nasdaq 100)
-    "VTI",  # Vanguard Total Stock Market
-    "VOO",  # Vanguard S&P 500
-    "IVV",  # iShares Core S&P 500
-    "XLF",  # Financials
-    "XLK",  # Technology
-    "XLE",  # Energy
-    "XLV",  # Healthcare
-    "XLY",  # Consumer Discretionary
-    "EFA",  # MSCI EAFE (Developed Markets ex-US/Canada)
-    "EEM",  # MSCI Emerging Markets
-    "VEA",  # Vanguard FTSE Developed Markets
-    "VWO",  # Vanguard FTSE Emerging Markets
-    "TLT",  # 20+ Year Treasury Bond
-    "IEF",  # 7–10 Year Treasury Bond
-    "AGG",  # Aggregate Bond Market
-    "GLD",  # SPDR Gold Shares
-    "SLV",  # Silver Trust
-    "DBC"   # Commodity Index
-]
+from sp500 import SP500_TICKERS
 
-st.title("ETF Correlation Heatmap Explorer")
+st.title("Correlation Heatmap Explorer")
 st.divider()
-st.write("""This app allows you to visualize the correlation between the stocks in the selected ETF""")
+st.write("This app allows you to visualize the correlation between two stocks from the S&P 500 index")
 st.divider()
-etf = st.selectbox("Select an ETF", etfs)
-ticker = Ticker(etf)
-holdings = ticker.fund_holding_info
-print(holdings)
-# holdings_list = holdings[etf]['holdings']
-# stocks = [holding['symbol'] for holding in holdings_list]
-# data = yf.download(stocks, period="3y")['Adj Close']
+ticker1 = st.selectbox("Select a first ticker", SP500_TICKERS)
+ticker2 = st.selectbox("Select another ticker", SP500_TICKERS, index=1)
 
-# log_returns = np.log(data / data.shift(1)).dropna()
-# correlation_matrix = log_returns.corr()
-# sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap="coolwarm", cbar_kws={"label": "Correlation Coefficient"})
-# st.pyplot(bbox_inches='tight')
+if st.button("Get stocks correlation heatmap"):
+    st.write(f"Fetching data for {ticker1} and {ticker2}...")
+    data = yf.download([ticker1, ticker2], period="3y")
+    if data is not None:
+        data.head()
+
+    #     log_returns = np.log(data / data.shift(1))
+    #     correlation = log_returns.corr()
+
+    #     fig, ax = plt.subplots(figsize=(6, 5))
+    #     sns.heatmap([[correlation]], annot=True, fmt=".2f", cmap="coolwarm",
+    #                 cbar_kws={"label": "Correlation Coefficient"}, ax=ax)
+    #     ax.set_xticklabels([ticker1, ticker2])
+    #     ax.set_yticklabels([ticker1, ticker2])
+    #     plt.title(f"Correlation Heatmap for {ticker1} and {ticker2}")
+    #     st.pyplot(fig)
+    # else:
+    #     st.error("Failed to retrieve data.")
