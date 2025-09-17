@@ -48,3 +48,9 @@ logs/
 # Local configuration
 .env
 config.local.py
+
+
+# Data files
+data/
+data/processed/
+data/raw/
