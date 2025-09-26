@@ -2,11 +2,11 @@
 
 An interactive web application for analyzing correlations between foreign exchange (FX) currency pairs using real-time financial data. Built with Streamlit and powered by Polars for lightning-fast data processing.
 
-## � Live Demo
+## Live Demo
 
 **Try the app now:** [https://correlation-heatmap.streamlit.app/](https://correlation-heatmap.streamlit.app/)
 
-## �🎯 Project Goal
+## 🎯 Project Goal
 
 The Correlation Heatmap Explorer is designed to provide traders, analysts, and financial researchers with an intuitive tool to visualize and analyze the correlation relationships between different FX pairs. By processing high-frequency tick data and calculating correlations between currency pairs, users can identify trading opportunities, assess portfolio risk, and understand market dynamics.
 
